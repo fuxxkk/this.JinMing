@@ -5,6 +5,7 @@ import com.myhadoop.entity.WebLogBean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 
 public class WebLogParserUtil {
@@ -46,12 +47,12 @@ public class WebLogParserUtil {
     public static String parserDate(String dateSrc) {
         String result = "";
         try {
-            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy HH:mm:ss");
+            SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MMM/yyyy:HH:mm:ss", Locale.US);
             SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             Date datesS = sdf1.parse(dateSrc);
              result = sdf2.format(datesS);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;

@@ -17,10 +17,11 @@ import java.util.Set;
 
 public class LogWash {
 
-    static class WashMapper extends Mapper<LongWritable, Text, WebLogBean, NullWritable> {
+    static class WashMapper extends Mapper<LongWritable, Text, Text, NullWritable> {
         private Set<String> set = new HashSet<String>();
         private WebLogBean webLogBean = new WebLogBean();
-
+        private Text k = new Text();
+        private NullWritable v = NullWritable.get();
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
             set.add("/about");
@@ -39,7 +40,8 @@ public class LogWash {
 
              webLogBean = WebLogParserUtil.parserLog(value.toString());
              webLogBean = WebLogParserUtil.filtStaticResource(webLogBean, set);
-             context.write(webLogBean,NullWritable.get());
+            k.set(webLogBean.toString());
+             context.write(k,v);
 
         }
     }
@@ -52,14 +54,13 @@ public class LogWash {
 
         job.setJarByClass(LogWash.class);
         job.setMapperClass(WashMapper.class);
-        job.setOutputKeyClass(WebLogBean.class);
+        job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(NullWritable.class);
-
-        job.setNumReduceTasks(0);
 
 
         FileInputFormat.setInputPaths(job,new Path("G:/hadoop/webdata/data"));
         FileOutputFormat.setOutputPath(job,new Path("G:/hadoop/webdata/out1"));
+        job.setNumReduceTasks(0);
         job.waitForCompletion(true);
         System.exit(0);
 
