@@ -77,8 +77,8 @@ public class LogWashFiltFalse {
         job.setOutputValueClass(NullWritable.class);
 
 
-        FileInputFormat.setInputPaths(job,new Path("G:/hadoop/webdata/data"));
-        FileOutputFormat.setOutputPath(job,new Path("G:/hadoop/webdata/out2"));
+        FileInputFormat.setInputPaths(job,new Path("F:\\hadoop\\webclick\\data"));
+        FileOutputFormat.setOutputPath(job,new Path("F:\\hadoop\\webclick\\out2"));
         job.waitForCompletion(true);
         System.exit(0);
 

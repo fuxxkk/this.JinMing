@@ -132,8 +132,8 @@ public class PageViews {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(NullWritable.class);
 
-        FileInputFormat.setInputPaths(job,new Path("G:\\hadoop\\webdata\\finalout"));
-        FileOutputFormat.setOutputPath(job,new Path("G:\\hadoop\\webdata\\pageviews"));
+        FileInputFormat.setInputPaths(job,new Path("F:\\hadoop\\webclick\\finnalout2"));
+        FileOutputFormat.setOutputPath(job,new Path("F:\\hadoop\\webclick\\pageviews"));
 
         job.waitForCompletion(true);
         System.exit(0);

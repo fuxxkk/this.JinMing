@@ -92,8 +92,8 @@ public class Visit {
         job.setOutputKeyClass(VisitBean.class);
         job.setOutputValueClass(NullWritable.class);
 
-        FileInputFormat.setInputPaths(job,new Path("G:\\hadoop\\webdata\\pageviews"));
-        FileOutputFormat.setOutputPath(job,new Path("G:\\hadoop\\webdata\\visit"));
+        FileInputFormat.setInputPaths(job,new Path("F:\\hadoop\\webclick\\pageviews"));
+        FileOutputFormat.setOutputPath(job,new Path("F:\\hadoop\\webclick\\visit"));
 
         job.waitForCompletion(true);
         System.exit(0);

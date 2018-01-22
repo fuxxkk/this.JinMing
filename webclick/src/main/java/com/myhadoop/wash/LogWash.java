@@ -58,8 +58,8 @@ public class LogWash {
         job.setOutputValueClass(NullWritable.class);
 
 
-        FileInputFormat.setInputPaths(job,new Path("G:/hadoop/webdata/data"));
-        FileOutputFormat.setOutputPath(job,new Path("G:/hadoop/webdata/out1"));
+        FileInputFormat.setInputPaths(job,new Path("F:\\hadoop\\webclick\\data"));
+        FileOutputFormat.setOutputPath(job,new Path("F:\\hadoop\\webclick\\out1"));
         job.setNumReduceTasks(0);
         job.waitForCompletion(true);
         System.exit(0);

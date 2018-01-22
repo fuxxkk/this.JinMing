@@ -29,7 +29,8 @@ public class WebLogBean implements Writable {
 	private String http_referer;// 用来记录从那个页面链接访问过来的
 	private String http_user_agent;// 记录客户浏览器的相关信息
 
-	
+
+
 	public void set(boolean valid,String remote_addr, String remote_user, String time_local, String request, String status, String body_bytes_sent, String http_referer, String http_user_agent) {
 		this.valid = valid;
 		this.remote_addr = remote_addr;
@@ -152,7 +153,6 @@ public class WebLogBean implements Writable {
 		out.writeUTF(null==body_bytes_sent?"":body_bytes_sent);
 		out.writeUTF(null==http_referer?"":http_referer);
 		out.writeUTF(null==http_user_agent?"":http_user_agent);
-
 	}
 
 }
