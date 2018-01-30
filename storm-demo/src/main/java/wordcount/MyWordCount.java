@@ -8,7 +8,7 @@ import org.apache.storm.tuple.Fields;
 public class MyWordCount  {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //准备topology
         TopologyBuilder topologyBuilder = new TopologyBuilder();
         //设置spout 第一个参数:id名,第二个参数:spout类,第三个参数:并发数
@@ -20,10 +20,12 @@ public class MyWordCount  {
         //创建configuration,配置一个toplogy需要多少个worker
         Config config = new Config();
         config.setNumWorkers(2);
-
+        //config.setDebug(true);
         //提交到本地.
         LocalCluster localCluster = new LocalCluster();
         localCluster.submitTopology("mywordcount",config,topologyBuilder.createTopology());
+        Thread.sleep(60 * 60 * 1000);
+        localCluster.shutdown();
     }
 
 }

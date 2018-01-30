@@ -28,6 +28,7 @@ public class MySplitBolt extends BaseRichBolt{
                 words) {
             outputCollector.emit(new Values(word, 1));
         }
+        outputCollector.ack(tuple);
     }
 
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
