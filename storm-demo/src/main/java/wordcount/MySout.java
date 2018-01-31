@@ -42,6 +42,16 @@ public class MySout extends BaseRichSpout {
         spoutOutputCollector.emit(vv, msgId);
     }
 
+    @Override
+    public void ack(Object msgId) {
+
+    }
+
+    @Override
+    public void fail(Object msgId) {
+
+    }
+
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
             outputFieldsDeclarer.declare(new Fields("love"));
     }
