@@ -2,6 +2,10 @@ package kafka2storm;
 
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
+import org.apache.storm.StormSubmitter;
+import org.apache.storm.generated.AlreadyAliveException;
+import org.apache.storm.generated.AuthorizationException;
+import org.apache.storm.generated.InvalidTopologyException;
 import org.apache.storm.kafka.KafkaSpout;
 import org.apache.storm.kafka.SpoutConfig;
 import org.apache.storm.kafka.ZkHosts;
@@ -16,7 +20,7 @@ import java.util.Map;
 
 public class Kafaka2Storm {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidTopologyException, AuthorizationException, AlreadyAliveException {
         TopologyBuilder topologyBuilder = new TopologyBuilder();
         topologyBuilder.setSpout("kafkaSpout",
                 new KafkaSpout(new SpoutConfig(new ZkHosts("mini1:2181,mini2:2181"),"test","/myKafka","kafkaSpout")),1);
@@ -25,8 +29,12 @@ public class Kafaka2Storm {
         Config config = new Config();
         config.setNumWorkers(1);
 
-        LocalCluster localCluster = new LocalCluster();
-        localCluster.submitTopology("kafka2storm",config,topologyBuilder.createTopology());
+        if (args.length>0) {
+            StormSubmitter.submitTopology(args[0],config,topologyBuilder.createTopology());
+        }else {
+            LocalCluster localCluster = new LocalCluster();
+            localCluster.submitTopology("kafka2storm",config,topologyBuilder.createTopology());
+        }
     }
 
 
