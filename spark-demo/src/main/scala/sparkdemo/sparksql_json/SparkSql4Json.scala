@@ -1,5 +1,7 @@
 package sparkdemo.sparksql_json
 
+import java.util.Properties
+
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
@@ -38,6 +40,29 @@ object SparkLoadJson{
       List(Person(line.getAs[Long]("id").toInt,line.getAs[String]("name"),line.getAs[Long]("age").toInt))
     })
     println(personList.collect().toBuffer)
+    spark.stop()
+  }
+}
+
+object SparkSql2Mysql{
+  def main(args: Array[String]): Unit = {
+    //System.setProperty("HADOOP_USER_NAME","root")
+    val conf = new SparkConf().setAppName("sparksql4json").setMaster("local[2]")
+    val spark = SparkSession.builder().config(conf).getOrCreate()
+
+    val personRDD = spark.sparkContext.textFile("hdfs://mini1:9000/person.txt").map(line=>{
+      val f = line.split(",")
+      Person(f(0).toInt,f(1),f(2).toInt)
+    })
+
+    import spark.implicits._
+    val personDF = personRDD.toDF()
+    personDF.createOrReplaceTempView("person")
+    val properties = new Properties()
+    properties.setProperty("user","root")
+    properties.setProperty("password","1234")
+    personDF.write.mode("append").jdbc("jdbc:mysql://localhost:3306/bigdata","student",properties)
+
     spark.stop()
   }
 }
